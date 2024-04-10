@@ -1,0 +1,48 @@
+mqtt:
+  host: mqtt_internal
+
+detect:
+  width: 640
+  height: 480
+
+record:
+  enabled: true
+  expire_interval: 120
+  retain:
+    days: 15
+    mode: motion
+  events:
+    pre_capture: 5
+    post_capture: 5
+
+snapshots:
+  enabled: true
+  bounding_box: true
+  retain:
+    default: 60
+    objects:
+      person: 60
+      cat: 60
+      dog: 60
+      bird: 60
+      car: 60
+      motorcycle: 60
+
+cameras:
+  front_street:
+    ffmpeg:
+      inputs:
+        # TODO replace with RTSP source URL
+        - path: rtsp://192.168.0.128:554/user=admin&password=&channel=1&stream=0.sdp?real_stream--rtp-caching=100
+          roles:
+            - detect
+            - record
+
+  back_street:
+    ffmpeg:
+      inputs:
+        # TODO replace with RTSP source URL
+        - path: rtsp://192.168.0.128:554/user=admin&password=&channel=2&stream=0.sdp?real_stream--rtp-caching=100
+          roles:
+            - detect
+            - record

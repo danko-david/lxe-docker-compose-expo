@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  web:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'gitlab'
+    container_name: gitlab-ce
+    environment:
+      - GITLAB_ROOT_PASSWORD
+      - GITLAB_OMNIBUS_CONFIG="external_url 'http://gitlab'"
+    # ports:
+    #   - 80
+    #   - 443
+    volumes:
+      - './data/config:/etc/gitlab'
+      - './data/logs:/var/log/gitlab'
+      - './data/data:/var/opt/gitlab'
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    restart: always
+    depends_on:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - './data/gitlab-runner:/etc/gitlab-runner'
