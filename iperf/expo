@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# cd to units directory
+cd "$(dirname `readlink -f "$0"`)"
+
+info_short()
+{
+  echo "Network throughput test server"
+}
+
+# no data folder needed
+init()
+{
+  true
+}
+
+source ../.expo_functions

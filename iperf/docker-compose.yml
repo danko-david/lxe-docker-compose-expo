@@ -1,0 +1,7 @@
+services:
+  iperf:
+    image: networkstatic/iperf3
+    ports:
+      - 5001/tcp
+      - 5001/udp
+    command: -s -p 5001
