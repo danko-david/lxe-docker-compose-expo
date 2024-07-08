@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# cd to units directory
+cd "$(dirname `readlink -f "$0"`)"
+
+info_short()
+{
+  echo "Powerful enterprise ready web based multi project git CI/CD platform with artifactory, user and issue management and more."
+}
+
+source ../.expo_functions
