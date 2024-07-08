@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# cd to units directory
+cd "$(dirname `readlink -f "$0"`)"
+
+info_short()
+{
+  echo "Web based NVR object recogniser and data collector"
+}
+
+init()
+{
+  mkdir -p ./data/frigate/{config,recordings}
+  mkdir -p ./data/mqtt/config
+  if [ ! -f ./data/frigate/config/config.yml ]
+  then
+    cp ./config/config.yml ./data/frigate/config/
+  fi
+
+  if [ ! -f ./data/mqtt/config/mosquitto.conf ]
+  then
+    cp ./config/mosquitto.conf ./data/mqtt/config/mosquitto.conf
+  fi
+}
+
+source ../.expo_functions

@@ -1,5 +1,5 @@
 mqtt:
-  host: mqtt_internal
+  host: mqtt # hostname of mqtt container
 
 detect:
   width: 640
