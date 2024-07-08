@@ -1,0 +1,30 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "redmine"
+      MYSQL_USER: "redmine"
+      MYSQL_PASSWORD: "redmine"
+      MYSQL_ROOT_PASSWORD: "redmine"
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - ./data/mysql/data:/var/lib/mysql
+
+  redmine:
+    image: redmine
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      REDMINE_DB_MYSQL: mysql
+      REDMINE_DB_PASSWORD: redmine
+      REDMINE_SECRET_KEY_BASE: redmine
+
+    ports:
+      - 80
+    volumes:
+      - ./data/redmine/data:/home/redmine/data
+      - ./data/redmine/logs:/var/log/redmine

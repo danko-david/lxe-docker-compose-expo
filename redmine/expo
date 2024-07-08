@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# cd to units directory
+cd "$(dirname `readlink -f "$0"`)"
+
+info_short()
+{
+  echo "Web base multi project and issue management system"
+}
+
+init()
+{
+  mkdir -p ./data/mysql/data
+  chmod 777 ./data/mysql/data
+}
+
+source ../.expo_functions
