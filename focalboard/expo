@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# cd to units directory
+cd "$(dirname `readlink -f "$0"`)"
+
+info_short()
+{
+  echo "Simple kanban board based issue tracker"
+}
+
+init()
+{
+  mkdir ./data
+  chmod 777 ./data
+}
+
+source ../.expo_functions
