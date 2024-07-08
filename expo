@@ -1,0 +1,69 @@
+#!/bin/bash
+
+cd "$(dirname `readlink -f "$0"`)"
+
+units_list()
+{
+  _rh_try_ret_help 'List all units'
+  for d in */
+  do
+    if [ -f $d/docker-compose.yml ]
+    then
+      echo ${d::-1}
+    fi
+  done
+}
+
+units_info()
+{
+  units_list | while read u
+  do
+    info=""
+    if [ -f $u/expo ]
+    then
+      info=$($u/expo info_short)
+    fi
+    if [ ! -z "$info" ]
+    then
+      echo "$u - $info"
+    else
+      echo "$u"
+    fi
+  done
+}
+
+unit()
+{
+  _rh_try_ret_help 'Manage single unit'
+
+  if [ 0 == $# ]
+  then
+    echo "Specify a unit. Call units_list to list units"
+    exit 1
+  fi
+
+  if [ ! -f $1/docker-compose.yml ]
+  then
+    echo "Unit $1 does not exists"
+    exit 2
+  fi
+
+  unit=$1
+  shift
+
+  if [ -f $unit/expo ]
+  then
+    $unit/expo "$@"
+  else
+    cd $unit
+    source ../.expo_functions "$@"
+  fi
+}
+
+ips()
+{
+  _rh_try_ret_help 'Print the ip adresses of running containers'
+  docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';
+}
+
+source ./.expo_functions

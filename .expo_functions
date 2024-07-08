@@ -1,0 +1,168 @@
+#!/bin/bash
+
+# helper script executor, called by expo units after defining unit specific
+# helper functions
+############################# RH helper functions ##############################
+
+_rh_try_ret_help()
+{
+	if [ ! -z $RH_RUNTIME_REQUEST_HELP ]
+	then
+		echo $1
+		exit 1;
+	fi
+}
+
+############################### default functions ##############################
+# defined when unit doesn't define
+
+func_nonex()
+{
+	# if the main expo script called, do not define overwritable unit specific functions
+	if [ "function" = "$(type -t units_list)" ]
+	then
+		return 1
+	fi
+
+	[ "function" != "$(type -t $1)" ]
+	return $?
+}
+
+
+if func_nonex init
+then
+	init()
+	{
+		_rh_try_ret_help 'Prepares compose stack to run'
+	  mkdir -p ./data/
+	}
+fi
+
+if func_nonex start
+then
+	start()
+	{
+	  _rh_try_ret_help 'Starts expo stack'
+	  docker compose up -d
+	}
+fi
+
+if func_nonex purge
+then
+	purge()
+	{
+	  _rh_try_ret_help 'Erases all user data'
+	  rm -Rf ./data
+	}
+fi
+
+if func_nonex up
+then
+	up()
+	{
+		_rh_try_ret_help 'Initializes and starts expo stack'
+		init
+		start
+	}
+fi
+
+if func_nonex down
+then
+	down()
+	{
+		_rh_try_ret_help 'Stops services but keep user files'
+		docker compose down
+	}
+fi
+
+if func_nonex destroy
+then
+	destroy()
+	{
+		_rh_try_ret_help 'Stops expo unit and purge user data'
+		down
+		purge
+	}
+fi
+
+if func_nonex dc
+then
+	dc()
+	{
+		_rh_try_ret_help 'Forwards docker compose calls'
+		docker compose "$@"
+	}
+fi
+
+if func_nonex readme
+then
+	readme()
+	{
+		_rh_try_ret_help 'Prints the content of the readme file is exists'
+		if [ -f README.md ]
+		then
+cat << EOF
+################################################################################
+# README of expo unit $(basename $(readlink -f .))
+################################################################################
+EOF
+			cat README.md
+			echo ""
+		else
+			echo "There is no README file attached"
+		fi
+	}
+fi
+
+############################ RH built-in functions #############################
+
+help()
+{
+	_rh_try_ret_help "Returns help with the list of all annotated functions"
+
+	echo "It is a wrapper script wherein you can collect tiny commands."
+	echo "Specify one helper function from the followings:"
+
+	RH_RUNTIME_REQUEST_HELP=true
+
+	for f in ${RH_FUNCTIONS[@]}
+	do
+		# if the command has help
+		if type $f | grep -qzP '{\s+_rh_try_ret_help '
+		then
+			echo -e "\t$f - "$($f)
+		fi
+	done
+}
+
+############################## Application area ################################
+
+# Collection available commands
+RH_FUNCTIONS=()
+
+for func in `typeset -F | grep -Po '(?<=-f).*$' | sort`
+do
+	RH_FUNCTIONS+=($func);
+done
+
+# print help if nothing specified
+
+if [ $# '<' '1' ]
+then
+	help
+	exit 1
+fi
+
+# run command
+for f in ${RH_FUNCTIONS[@]}
+do
+	if [ "$1" "=" "$f" ]
+	then
+		$f "${@:2}"
+		exit $?
+	fi
+done
+
+echo "Expo helper function $1 not found, so now printing help..."
+help
+exit 1
