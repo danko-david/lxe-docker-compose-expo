@@ -1,0 +1,8 @@
+services:
+  gitlab:
+    image: 'registry:latest'
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    volumes:
+      - ./data/registry:/var/lib/registry
