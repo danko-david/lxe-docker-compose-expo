@@ -1,0 +1,10 @@
+services:
+  ftp:
+    image: 'delfer/alpine-ftp-server:latest'
+    restart: unless-stopped
+    ports:
+      - 21:21
+    environment:
+      - USERS=user|password|/home/user/|10000
+    volumes:
+      - ./data/data:/home
