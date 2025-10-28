@@ -20,5 +20,6 @@ You need to register gitlab runner in gitlab:
 - run: docker compose exec gitlab-runner gitlab-runner register \
     --non-interactive \
     --executor "docker" \
+    --docker-image "debian:latest" \
     --url "http://gitlab/" \
-    --token "CcuChY5p_x4MDLPgY1mD"
+    --registration-token "CcuChY5p_x4MDLPgY1mD"
