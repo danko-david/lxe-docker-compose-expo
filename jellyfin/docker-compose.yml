@@ -1,0 +1,17 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./data/config:/config
+      - ./data/metadata:/config/data/metadata/
+      # TODO mount your media to a location you can later select in the first
+      # setup step, eg: ./home/user/Downloads:/data/movies:ro
+    ports:
+      - 8096
+      - 8920
+      - 7359/udp
+      - 1900/udp
