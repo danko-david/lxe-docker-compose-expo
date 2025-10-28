@@ -5,7 +5,7 @@ cd "$(dirname `readlink -f "$0"`)"
 
 info_short()
 {
-  echo "Home automation system"
+  echo "FTP server"
 }
 
-source ../.expo_functions
+source ../../.expo_functions

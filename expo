@@ -5,11 +5,11 @@ cd "$(dirname `readlink -f "$0"`)"
 units_list()
 {
   _rh_try_ret_help 'List all units'
-  for d in */
+  for d in units/*
   do
     if [ -f $d/docker-compose.yml ]
     then
-      echo ${d::-1}
+      echo ${d:6:999}
     fi
   done
 }
@@ -19,9 +19,9 @@ units_info()
   units_list | while read u
   do
     info=""
-    if [ -f $u/expo ]
+    if [ -f units/$u/expo ]
     then
-      info=$($u/expo info_short)
+      info=$(units/$u/expo info_short)
     fi
     if [ ! -z "$info" ]
     then
@@ -42,12 +42,13 @@ unit()
     exit 1
   fi
 
-  if [ ! -f $1/docker-compose.yml ]
+  if [ ! -f units/$1/docker-compose.yml ]
   then
     echo "Unit $1 does not exists"
     exit 2
   fi
 
+  cd units/
   unit=$1
   shift
 
@@ -56,7 +57,7 @@ unit()
     $unit/expo "$@"
   else
     cd $unit
-    source ../.expo_functions "$@"
+    source ../../.expo_functions "$@"
   fi
 }
 

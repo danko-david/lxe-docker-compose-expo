@@ -14,4 +14,4 @@ init()
   chmod 777 ./data
 }
 
-source ../.expo_functions
+source ../../.expo_functions

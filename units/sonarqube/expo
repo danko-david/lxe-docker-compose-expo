@@ -14,4 +14,4 @@ init()
   chmod 777 ./data/sonarqube/{data,extensions,logs}
 }
 
-source ../.expo_functions
+source ../../.expo_functions

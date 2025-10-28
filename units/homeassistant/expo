@@ -5,7 +5,7 @@ cd "$(dirname `readlink -f "$0"`)"
 
 info_short()
 {
-  echo "Docker image registry"
+  echo "Home automation system"
 }
 
-source ../.expo_functions
+source ../../.expo_functions

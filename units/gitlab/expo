@@ -8,4 +8,4 @@ info_short()
   echo "Powerful enterprise ready web based multi project git CI/CD platform with artifactory, user and issue management and more."
 }
 
-source ../.expo_functions
+source ../../.expo_functions

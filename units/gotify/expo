@@ -8,4 +8,4 @@ info_short()
   echo "Notification relay server from REST applications to android or websocket clients."
 }
 
-source ../.expo_functions
+source ../../.expo_functions

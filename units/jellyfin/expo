@@ -5,13 +5,14 @@ cd "$(dirname `readlink -f "$0"`)"
 
 info_short()
 {
-  echo "Network throughput test server"
+  echo "Local VOD media server"
 }
 
 # no data folder needed
 init()
 {
-  true
+  mkdir -p ./data/{metadata,config}
+  chmod 777 -R ./data/
 }
 
-source ../.expo_functions
+source ../../.expo_functions

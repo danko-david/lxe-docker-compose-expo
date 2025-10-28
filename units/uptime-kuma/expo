@@ -8,4 +8,4 @@ info_short()
   echo "Simple web based uptime monitoring system"
 }
 
-source ../.expo_functions
+source ../../.expo_functions
