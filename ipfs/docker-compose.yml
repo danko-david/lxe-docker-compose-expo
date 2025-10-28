@@ -1,0 +1,13 @@
+services:
+  ipfs:
+    restart: unless-stopped
+    image: ipfs/kubo:release
+    environment:
+      - IPFS_PATH=/data
+    ports:
+      - 4001 # ipfs swarm - expose if needed/wanted
+      - 4001/udp
+      - 5001 # ipfs api - expose if needed/wanted
+      - 8080 # ipfs gateway - expose if needed/wanted
+    volumes:
+      - ./data:/data
