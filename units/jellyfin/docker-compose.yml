@@ -12,6 +12,3 @@ services:
       # setup step, eg: ./home/user/Downloads:/data/movies:ro
     ports:
       - 8096
-      - 8920
-      - 7359/udp
-      - 1900/udp
