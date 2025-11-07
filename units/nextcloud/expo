@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# cd to units directory
+cd "$(dirname `readlink -f "$0"`)"
+
+info_short()
+{
+  echo "Collaboration and external cloud service replacement platform"
+}
+
+# no data folder needed
+init()
+{
+  mkdir -p ./data/{nextcloud,db}
+  chmod 777 -R ./data/
+}
+
+source ../../.expo_functions
