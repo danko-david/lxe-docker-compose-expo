@@ -1,0 +1,15 @@
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - USER=user
+      - PASS=password
+    volumes:
+      - ./data/config:/config
+      - ./data/downloads:/downloads
+      - ./data/torrent-feed:/watch
+    ports:
+      - 9091
