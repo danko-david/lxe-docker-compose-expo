@@ -3,7 +3,7 @@ stages:
   - purge
 
 variables:
-  BUILD_IMAGE: build-image:latest
+  BUILD_IMAGE: cruizba/ubuntu-dind
 
 .unit-create:
   stage: create
