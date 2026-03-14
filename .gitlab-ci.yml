@@ -1,0 +1,189 @@
+stages:
+  - create
+  - purge
+
+variables:
+  BUILD_IMAGE: build-image:latest
+
+.unit-create:
+  stage: create
+  image: $BUILD_IMAGE
+  when: manual
+  script: ./expo unit $UNIT up
+
+.unit-purge:
+  stage: purge
+  image: $BUILD_IMAGE
+  when: manual
+  script: ./expo unit $UNIT purge
+
+affine-create:
+  extends: .unit-create
+  variables:
+    UNIT: affine
+
+affine-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: affine
+
+focalboard-create:
+  extends: .unit-create
+  variables:
+    UNIT: focalboard
+
+focalboard-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: focalboard
+
+frigate-create:
+  extends: .unit-create
+  variables:
+    UNIT: frigate
+
+frigate-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: frigate
+
+ftp-create:
+  extends: .unit-create
+  variables:
+    UNIT: ftp
+
+ftp-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: ftp
+
+gitlab-create:
+  extends: .unit-create
+  variables:
+    UNIT: gitlab
+
+gitlab-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: gitlab
+
+gotify-create:
+  extends: .unit-create
+  variables:
+    UNIT: gotify
+
+gotify-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: gotify
+
+homeassistant-create:
+  extends: .unit-create
+  variables:
+    UNIT: homeassistant
+
+homeassistant-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: homeassistant
+
+iperf-create:
+  extends: .unit-create
+  variables:
+    UNIT: iperf
+
+iperf-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: iperf
+
+ipfs-create:
+  extends: .unit-create
+  variables:
+    UNIT: ipfs
+
+ipfs-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: ipfs
+
+jellyfin-create:
+  extends: .unit-create
+  variables:
+    UNIT: jellyfin
+
+jellyfin-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: jellyfin
+
+nextcloud-create:
+  extends: .unit-create
+  variables:
+    UNIT: nextcloud
+
+nextcloud-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: nextcloud
+
+qbittorrent-create:
+  extends: .unit-create
+  variables:
+    UNIT: qbittorrent
+
+qbittorrent-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: qbittorrent
+
+redmine-create:
+  extends: .unit-create
+  variables:
+    UNIT: redmine
+
+redmine-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: redmine
+
+registry-create:
+  extends: .unit-create
+  variables:
+    UNIT: registry
+
+registry-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: registry
+
+sonarqube-create:
+  extends: .unit-create
+  variables:
+    UNIT: sonarqube
+
+sonarqube-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: sonarqube
+
+transmission-create:
+  extends: .unit-create
+  variables:
+    UNIT: transmission
+
+transmission-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: transmission
+
+uptime-kuma-create:
+  extends: .unit-create
+  variables:
+    UNIT: uptime-kuma
+
+uptime-kuma-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: uptime-kuma
+
