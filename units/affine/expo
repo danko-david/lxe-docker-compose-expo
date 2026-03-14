@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# cd to units directory
+cd "$(dirname `readlink -f "$0"`)"
+
+info_short()
+{
+  echo "A privacy-focused, local-first, open-source, and ready-to-use alternative for Notion & Miro."
+}
+
+init()
+{
+  mkdir ./data
+  chmod 777 ./data
+}
+
+source ../../.expo_functions
