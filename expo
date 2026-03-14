@@ -67,4 +67,58 @@ ips()
   docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';
 }
 
+fix_perms()
+{
+  _rh_try_ret_help 'Fix the permissions of the repo'
+  chmod 755 ./units/*/expo
+}
+
+gen_gitlab_ci()
+{
+  _rh_try_ret_help 'Generate gitlab ci with all discoverable units'
+
+{
+cat << EOF
+stages:
+  - create
+  - purge
+
+variables:
+  BUILD_IMAGE: build-image:latest
+
+.unit-create:
+  stage: create
+  image: \$BUILD_IMAGE
+  when: manual
+  script: ./expo unit \$UNIT up
+
+.unit-purge:
+  stage: purge
+  image: \$BUILD_IMAGE
+  when: manual
+  script: ./expo unit \$UNIT purge
+
+EOF
+
+for u in $(units_list)
+do
+  cat << EOF
+${u}-create:
+  extends: .unit-create
+  variables:
+    UNIT: $u
+
+${u}-purge:
+  extends: .unit-purge
+  variables:
+    UNIT: $u
+
+EOF
+
+done
+
+} > .gitlab-ci.yml
+
+}
+
 source ./.expo_functions
