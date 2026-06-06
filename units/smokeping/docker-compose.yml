@@ -1,0 +1,11 @@
+services:
+  smokeping:
+    image: linuxserver/smokeping
+    ports:
+      - 80
+    volumes:
+      - ./data/config:/config
+      - ./data/data:/data
+    restart: unless-stopped
+    cap_add:
+      - NET_RAW  # Required for ICMP (ping)
