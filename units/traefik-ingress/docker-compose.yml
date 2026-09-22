@@ -1,0 +1,12 @@
+
+services:
+  traefik:
+    image: traefik:latest
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - "--log.level=INFO"
+      - "--providers.docker=true"
+      - "--entryPoints.web.address=:80"
