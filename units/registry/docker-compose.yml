@@ -1,5 +1,5 @@
 services:
-  gitlab:
+  registry:
     image: 'registry:latest'
     restart: unless-stopped
     ports:
