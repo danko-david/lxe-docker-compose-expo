@@ -1,6 +1,7 @@
 services:
   frigate:
     image: ghcr.io/blakeblackshear/frigate:stable
+    restart: unless-stopped
     shm_size: "256mb" # update for your cameras based on calculation above
 #    devices:
       #- /dev/bus/usb:/dev/bus/usb # passes the USB Coral, needs to be modified for other versions
@@ -15,10 +16,13 @@ services:
         tmpfs:
           size: 1000000000
     ports:
-      - 5000 # Main web port
-      - 8554 # RTSP feeds
-      - 8555/tcp # WebRTC over tcp
-      - 8555/udp # WebRTC over udp
+      - 5000:5000 # Main web port
+      - 8554:8554 # RTSP feeds
+      - 8555:8555/tcp # WebRTC over tcp
+      - 8555:8555/udp # WebRTC over udp
+      
+      - 8971:8971
+      - 1984:1984
     environment:
       FRIGATE_RTSP_PASSWORD: "password"
 
